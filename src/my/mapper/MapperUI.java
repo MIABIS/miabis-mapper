@@ -1022,7 +1022,7 @@ public class MapperUI extends javax.swing.JFrame {
         jTabbedPane1.setSelectedIndex(0);
         String fileToParse;
         String current = System.getProperty("user.dir");
-        fileToParse = current+"\\MIABIS-Mapper.csv";
+        fileToParse = current+"/MIABIS-Mapper.csv";
         BufferedReader fileReader = null;
         String DELIMITER = ";";
         DefaultTableModel myModelSC = (DefaultTableModel)TableSCMIABIS.getModel();
