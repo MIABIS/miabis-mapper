@@ -58,70 +58,58 @@ public class MapperUI extends javax.swing.JFrame {
         }
         // parse file and fill table
         String csvFile = TheLabel.getText();
-	BufferedReader br = null;
-	String line = "";
-	String cvsSplitBy = (String) TheComboBox.getSelectedItem();
-        if((cvsSplitBy =="Tab")){
+        
+		BufferedReader br = null;
+		String line = "";
+		String cvsSplitBy = (String) TheComboBox.getSelectedItem();
+        
+		if((cvsSplitBy =="Tab")){
             cvsSplitBy="\t";
-        } else {
         }
+		
         String[] term = null;
         int row = 0;
         
-        DefaultTableModel myModel = (DefaultTableModel)TheTable.getModel();
+        DefaultTableModel myModel = (DefaultTableModel) TheTable.getModel();
         //Reset the table
-        while(myModel.getRowCount()>0)
-          {
+        while(myModel.getRowCount()>0){
              myModel.removeRow(0);
-          }
+        }
         
         // read file
-        
         try {
 
-		Map<String, String> maps = new HashMap<String, String>();
-
-		br = new BufferedReader(new FileReader(csvFile));
-		//while ((line = br.readLine()) != null) {
-                        line = br.readLine();
+        	br = new BufferedReader(new FileReader(csvFile));
+        	line = br.readLine();
+		
 			// use comma as separator
 			term = line.split(cvsSplitBy);
-
-			//maps.put(term[0], term[1]);
-
-		//}
-
-		//loop map
-                int size = term.length;
-                int columnNumber = 1;
-		for (String str : term) {
-                    //fill jTable3 - mapper talbe
-                    System.out.println(str);
-                    //row = myModel.getRowCount()+1;
-                    Object[] RowData = {columnNumber,str};
-                    
-                    myModel.addRow(RowData);
-                    columnNumber++;
-		}
-
-	} 
-        catch (FileNotFoundException e) {
-		e.printStackTrace();
-	} 
-        catch (IOException e) {
-		e.printStackTrace();
-	} 
-        finally {
-		if (br != null) {
-			try {
-				br.close();
-			} 
-                        catch (IOException e) {
-				e.printStackTrace();
+	
+			//loop map
+	        
+	        int columnNumber = 1;
+			for (String str : term) {
+				//fill jTable3 - mapper talbe
+	            System.out.println(str);
+	            Object[] RowData = {columnNumber,str};
+	                    
+	            myModel.addRow(RowData);
+	            columnNumber++;
 			}
-		}
-	}
-        
+		} catch (FileNotFoundException e) {
+		e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
+        finally {
+        	if (br != null) {
+        		try {
+        			br.close();
+        		}catch (IOException e) {
+        			e.printStackTrace();
+        		}
+        	}
+        }
     }
    
     
