@@ -1,0 +1,9 @@
+CONTACT_ID;FIRST_NAME;LAST_NAME;PHONE_NO;EMAIL_ADDRESS;ADDRESS;ZIPCODE;CITY;COUNTRY
+1;Nancy;Pedersen;852482007;Nancy.Pedersen@ki.se;Nobels väg 12 A, 17177 Stockholm, Sweden;17177;Stockholm;Sweden
+2;Jan;Hillert;851776973;jan.hillert@ki.se;Karolinska Universitetssjukhuset, 17176 Stockholm, Sweden;17176;Stockholm;Sweden
+3;Christina;Hultman;852483893;Christina.Hultman@ki.se;Nobels väg 12A, 17177 Stockholm, Sweden;17177;Stockholm;Sweden
+4;Carl Johan;Östgren;706694225;carl.johan.ostgren@liu.se;Sandbäcksgatan 7, 58183 Linköping, Sweden;58183;Linköping;Sweden
+5;Peter;Siesjö;46171274;Peter.Siesjo@med.lu.se;, 22100 Lund, Sweden;22100;Lund;Sweden
+6;Elisabet;Hollén;101038587;elisabet.hollen@liu.se;Sandbäcksgatan 7, 58185 Linköping, Sweden;58185;Linköping;Sweden
+7;Lars;Alfredsson;852487478;Lars.Alfredsson@ki.se;Novels väg 13, 17177 Stockholm, Sweden;17177;Stockholm;Sweden
+8;Camilla;Lindblad;851774651;camilla.lindblad@ki.se;Karolinska Vägen 22, 17176 Stockholm, Sweden;17176;Stockholm;Sweden

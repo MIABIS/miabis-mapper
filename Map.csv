@@ -1,6 +1,23 @@
-1,name,Sample Collection,ID
-2,TITLE,Sample Collection,Name
-3,DESCRIPTION,Sample Collection,Description
-1,NAME,Study,ID
-2,KI_STUDY_NAME,Study,Name
-3,DESCRIPTION,Study,Description
+1,PROJECT_ID,Sample Collection,ID
+2,name,Sample Collection,Name
+3,TITLE,Sample Collection,Acronym
+4,DESCRIPTION,Sample Collection,Description
+9,CONTACT_ID,Sample Collection,Contact Information ID
+1,STUDY_CODE,Study,ID
+2,NAME,Study,Name
+4,DESCRIPTION,Study,Description
+5,KI_STUDY_TYPE,Study,Study Design
+9,CONTACT_ID,Study,Contact Information ID
+1,provid,Sample,Sample ID
+3,SAMPLE_TYPE,Sample,Material Type
+7,T_GENDER,Sample,Sex
+13,PROJECT_ID,Sample,Sample Collection ID
+14,STUDY_CODE,Sample,Study ID
+2,FIRST_NAME,Contact Information,First Name
+3,LAST_NAME,Contact Information,Last Name
+4,PHONE_NO,Contact Information,Phone
+5,EMAIL_ADDRESS,Contact Information,Email
+6,ADDRESS,Contact Information,Address
+7,ZIPCODE,Contact Information,ZIP
+8,CITY,Contact Information,City
+9,COUNTRY,Contact Information,Country
