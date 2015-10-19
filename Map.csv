@@ -1,23 +1,29 @@
-1,PROJECT_ID,Sample Collection,ID
-2,name,Sample Collection,Name
-3,TITLE,Sample Collection,Acronym
-4,DESCRIPTION,Sample Collection,Description
-9,CONTACT_ID,Sample Collection,Contact Information ID
-1,STUDY_CODE,Study,ID
-2,NAME,Study,Name
-4,DESCRIPTION,Study,Description
-5,KI_STUDY_TYPE,Study,Study Design
-9,CONTACT_ID,Study,Contact Information ID
-1,provid,Sample,Sample ID
-3,SAMPLE_TYPE,Sample,Material Type
-7,T_GENDER,Sample,Sex
-13,PROJECT_ID,Sample,Sample Collection ID
-14,STUDY_CODE,Sample,Study ID
-2,FIRST_NAME,Contact Information,First Name
-3,LAST_NAME,Contact Information,Last Name
-4,PHONE_NO,Contact Information,Phone
-5,EMAIL_ADDRESS,Contact Information,Email
-6,ADDRESS,Contact Information,Address
-7,ZIPCODE,Contact Information,ZIP
-8,CITY,Contact Information,City
-9,COUNTRY,Contact Information,Country
+#Sample Collection
+sampleCollection.ID=PROJECT_ID
+sampleCollection.Name=name
+sampleCollection.Acronym=TITLE
+sampleCollection.Description=DESCRIPTION
+sampleCollection.Contact Information ID=CONTACT_ID
+#Study
+study.ID=STUDY_CODE
+study.Name=NAME
+study.Description=DESCRIPTION
+study.Study Design=KI_STUDY_TYPE
+study.Principal Investigator=GROUP_NAME
+study.Contact Information ID=CONTACT_ID
+#Sample
+sample.Sample ID=provid
+sample.Material Type=SAMPLE_TYPE
+sample.Sex=T_GENDER
+sample.Sample Collection ID=PROJECT_ID
+sample.Study ID=STUDY_CODE
+#Contact Information
+
+contactInformation.First Name=FIRST_NAME
+contactInformation.Last Name=LAST_NAME
+contactInformation.Phone=PHONE_NO
+contactInformation.Email=EMAIL_ADDRESS
+contactInformation.Address=ADDRESS
+contactInformation.ZIP=ZIPCODE
+contactInformation.City=CITY
+contactInformation.Country=COUNTRY

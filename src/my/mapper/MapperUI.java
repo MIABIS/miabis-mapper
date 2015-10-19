@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package src.my.mapper;
+package my.mapper;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -1151,10 +1151,10 @@ public class MapperUI extends javax.swing.JFrame {
         try {
             mappingFile.createNewFile();
             fw = new FileWriter(mappingFile);
-            writeMapToFile(TableSCBiobank, fw);
-            writeMapToFile(TableSTBiobank, fw);
-            writeMapToFile(TableSABiobank, fw);
-            writeMapToFile(TableCIBiobank, fw);
+            writeMapToFile(TableSCBiobank, fw, "Sample Collection");
+            writeMapToFile(TableSTBiobank, fw, "Study");
+            writeMapToFile(TableSABiobank, fw, "Sample");
+            writeMapToFile(TableCIBiobank, fw, "Contact Information");
         } catch (IOException ex) {
             Logger.getLogger(MapperUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1169,7 +1169,7 @@ public class MapperUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_saveMapToFile
 
-    private void writeMapToFile(JTable jTable, FileWriter fw) throws IOException{
+    private void writeMapToFile(JTable jTable, FileWriter fw, String entityName) throws IOException{
         DefaultTableModel dtm = (DefaultTableModel) jTable.getModel();
         
         int nRow = dtm.getRowCount(), nCol = dtm.getColumnCount();
@@ -1177,22 +1177,43 @@ public class MapperUI extends javax.swing.JFrame {
         System.out.println(" dtm.getValueAt(0,0) "+dtm.getValueAt(0,0));
         System.out.println(" dtm.getValueAt(0,3) "+dtm.getValueAt(0,3));
         int prevRow = 0;
-        for (int i = 0 ; i < nRow ; i++){
-            for (int j = 0 ; j < nCol ; j++){
-            //if(j != 1){
-                    if(dtm.getValueAt(i,2) != null && dtm.getValueAt(i,3) != null){
-                            if(i > prevRow){
-                                    fw.write(System.lineSeparator());
-                            }
-                            fw.write(dtm.getValueAt(i,j).toString());
-                            if(j == 0 || j==1 || j==2){
-                                    fw.write(",");
-                            }
-                            prevRow = i;
-                    }
-
-            //}
+        fw.write("#"+entityName);
+        fw.write(System.lineSeparator());
+        StringBuffer miabisEntityName = new StringBuffer();
+        String[] strArr = entityName.split("\\s");
+        int count = 0;
+        for (String str : strArr) {
+            char[] stringArray = str.trim().toCharArray();
+            if(count == 0){
+            	stringArray[0] = Character.toLowerCase(stringArray[0]);
             }
+            else{
+            	stringArray[0] = Character.toUpperCase(stringArray[0]);
+            }
+            str = new String(stringArray);
+            miabisEntityName.append(str);
+            count++;
+        }
+        for (int i = 0 ; i < nRow ; i++){
+            //for (int j = 0 ; j < nCol ; j++){
+	            //if(j != 1){
+	                    if(dtm.getValueAt(i,2) != null && dtm.getValueAt(i,3) != null){
+	                            if(i > prevRow){
+	                                    fw.write(System.lineSeparator());
+	                            }
+	                            fw.write(miabisEntityName.toString());
+	                            fw.write(".");
+	                            fw.write(dtm.getValueAt(i,3).toString());
+	                            fw.write("=");
+	                            fw.write(dtm.getValueAt(i,1).toString());
+	                            /*if(j == 0 || j==1 || j==2){
+	                                    fw.write(",");
+	                            }*/
+	                            prevRow = i;
+	                    }
+	
+	            //}
+            //}
 
         }
 	fw.write(System.lineSeparator());
