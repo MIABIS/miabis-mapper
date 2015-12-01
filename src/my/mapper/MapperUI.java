@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package my.mapper;
+package src.my.mapper;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -927,7 +927,7 @@ public class MapperUI extends javax.swing.JFrame {
                 .addComponent(jPanel16, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("List values", jPanel8);
+        jTabbedPane1.addTab("List Values", jPanel8);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.setPreferredSize(new java.awt.Dimension(0, 50));

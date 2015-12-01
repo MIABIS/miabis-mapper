@@ -3,47 +3,81 @@ Sample Collection;ID;Sample Collection ID that also links the sample collection 
 Sample Collection;Acronym;Short name in use for the sample collection
 Sample Collection;Name;The name of the sample collection in english
 Sample Collection;Description;A description of the sample collection. Recommendation max. 2000 char.
-Sample Collection;Data Categories;The data catagories from which data is available. Can be several values†MIABIS-2.0-3
-Sample Collection;Collection Type;The type of the sample collection. Can be several values†MIABIS-2.0-16
-Sample Collection;Contact Information ID;Contact information for the contact person of the sample collection†MIABIS-2.0-07and†MIABIS-2.0-23†of the PI
+Sample Collection;Sex;The sex of the individuals in the sample collection. Can be one or more of the following values: Male, Female, Unknown, Undiferrentiated MIABIS-2.0-09
+Sample Collection;Age Low;Age of youngest sample donor at time of sample donation
+Sample Collection;Age High;Age of oldest sample donor at time of sample donation
+Sample Collection;Age Unit;Unit defining Age Low and Age High. Can be one of the following values: years, months, weeks, days
+Sample Collection;Data categories;The data catagories from which data is available. Can be several values MIABIS-2.0-3
+Sample Collection;Material type;The biospecimen saved from a biological entity for propagation e.g. testing, diagnostics, treatment or research purposes. Can be several values MIABIS-2.0-14
+Sample Collection;Storage temperature;The long term storage temperature at which the samples are stored after preparation. Can be several values:MIABIS-2.0-15
+Sample Collection;Collection type;The type of the sample collection. Can be several values MIABIS-2.0-16
+Sample Collection;Disease;The disease of main interest in the sample collection, if any. Can be several values as defined in MIABIS-2.0-17
+Sample Collection;Contact information;Contact information for the contact person of the sample collection MIABIS-2.0-07and MIABIS-2.0-23 of the PI
 Study;ID;The unique ID or acronym of the study
 Study;Name;The name of the study in English
 Study;Description;A description of the study aim. Recommendation max. 2000 char.
 Study;Principal Investigator;The name of the person responsible for the study e.g. the principal investigator
-Study;Contact Information ID;Contact information for the contact person of the study†MIABIS-2.0-07†and†MIABIS-2.0-23
-Study;Study Design;The design of the study. Can be one or several values:†MIABIS-2.0-19
-Study;Data Categories;The type of data that is associated with the samples in the study. Can be several values†MIABIS-2.0-13
-Study;Total Number of Participants;Total number of individuals recruited to the study
-Study;Total Number of Sample Donors;Total number of individuals with biological samples in the study
-Study;Inclusion Criteria;Information on type of parameters that determine which individuals will become study participants. Can be several valuesMIABIS-2.0-22
+Study;Contact information;Contact information for the contact person of the study MIABIS-2.0-07 and MIABIS-2.0-23
+Study;Study design;The design of the study. Can be one or several values: MIABIS-2.0-19
+Study;Data categories;The type of data that is associated with the samples in the study. Can be several values MIABIS-2.0-13
+Study;Material type;The biospecimen saved from a biological entity for propagation e.g. testing, diagnostics, treatment or research purposes. Can be several values MIABIS-2.0-14
+Study;Total number of participants;Total number of individuals recruited to the study
+Study;Total number of sample donors;Total number of individuals with biological samples in the study
+Study;Inclusion criteria;Information on type of parameters that determine which individuals will become study participants. Can be several valuesMIABIS-2.0-22
 Sample;Sample ID;"Unique ID of the sample within a sample collection, often represented by the sample barcode; text identifier, recommendation maximum 30 characters."
 Sample;Parent sample ID;Unique ID within a sample collection of a parent sample. Only if the sample has a parent sample i.e. if the sample itself is an aliquot or a derivative from another sample.
-Sample;Biboank ID;ID of biobank where this sample is stored.
-Sample;Sample Collection ID;ID of sample collection if this sample is part of a sample collection.
-Sample;Study ID;ID of study if this sample is part of a study.
-Sample;Material Type;The biospecimen type saved from a biological entity for testing, diagnostic, propagation, treatment or research purposes. Can be several values†MIABIS-2.0-14
-Sample;Container;Type of container where this sample is stored.
-Sample;Storage Temperature;The long term storage temperature at which the samples are stored after preparation. Can be several values:MIABIS-2.0-15
-Sample;Sampled Time;The time when the sample is taken according to ISO 8601 i.e. YYYYMMDDThhmm
-Sample;Anatomical Part Ontology;Name of ontology used for anatomical part.
-Sample;Anatomical Part Ontology Version;Version of selected ontology for anatomical part. 
-Sample;Anatomical Part Ontology Code;Anatomical part code from the selected anatomical part ontology version
-Sample;Anatomical Part Ontology Description;Description from the selected anatomical part ontology code.
-Sample;Anatomical Part Free Text;Explanation about anatomical part in case of unknown or insufficient information.
+Sample;Material type;The biospecimen type saved from a biological entity for testing, diagnostic, propagation, treatment or research purposes. Can be several values MIABIS-2.0-14
+Sample;Storage temperature;The long term storage temperature at which the samples are stored after preparation. Can be several values:MIABIS-2.0-15
+Sample;Sampled time;The time when the sample is taken according to ISO 8601 i.e. YYYYMMDDThhmm
+Sample;Anatomical site;The anatomical position of the body where the solid sample was taken from. MIABIS-44
 Sample;Sex;The sex of the study participants. Can be one or more of the following values: Male, Female, Unknown, UndiferrentiatedMIABIS-2.0-09
-Sample;Age Low;Approximate low age value chosen for the pseudonimization of the sample donors' age.
-Sample;Age High;Approximate high age value chosen for the pseudonimization of the sample donors' age.
+Sample;Age;Age of the youngest study participant at time of inclusion
 Sample;Age Unit;Unit defining Age Low and Age High. Can be one of the following values: years, months, weeks, days
 Disease;Disease Ontology;Name of ontology used for disease. Can be several values e.g. ICD, SNOMED
 Disease;Disease Ontology Version;Version of selected ontology for disease e.g. ICD-9, ICD-10, SNOMED-CT
 Disease;Disease Ontology Code;Disease code from the selected Disease Ontology Version e.g. C61
 Disease;Disease Ontology Description;Description from the selected Disease Ontology Code e.g : Malignant neoplasm of prostate
 Disease;Disease Free Text;Explanation about disease or symptom in case of unknown disease or insufficient information
-Contact Information;First Name;Textual string of letters denoting the first name of the Contact
-Contact Information;Last Name;Textual string of letters denoting the last name of the Contact
+Contact Information;First name;Textual string of letters denoting the first name of the Contact
+Contact Information;Last name;Textual string of letters denoting the last name of the Contact
 Contact Information;Phone;Phone to the Contact including international call prefix
 Contact Information;Email;Email address of the Contact person
 Contact Information;Address;Street name and street number or PO Box of the Contact person
 Contact Information;ZIP;ZIP of the Contact person
 Contact Information;City;City of the Contact person
 Contact Information;Country;Country of the Contact person
+List Values;Sex;Male
+List Values;Sex;Female
+List Values;Sex;Unknown
+List Values;Sex;Undifferentiated
+List Values;Material Type;Blood
+List Values;Material Type;DNA
+List Values;Material Type;Faeces
+List Values;Material Type;Immortalized Cell Lines
+List Values;Material Type;Isolated Pathogen
+List Values;Material Type;Plasma
+List Values;Material Type;RNA
+List Values;Material Type;Saliva
+List Values;Material Type;Serum
+List Values;Material Type;Tissue (Frozen)
+List Values;Material Type;Tissue (FFPE)
+List Values;Material Type;Urine
+List Values;Material Type;Other
+List Values;Data Categoies;Biological samples
+List Values;Data Categoies;Survey data
+List Values;Data Categoies;Imaging data
+List Values;Data Categoies;Medical records
+List Values;Data Categoies;National registries
+List Values;Data Categoies;Genealogical records
+List Values;Data Categoies;Physiological/Biochemical measurements
+List Values;Data Categoies;Other
+List Values;Collection Type;Case-control
+List Values;Collection Type;Cohort
+List Values;Collection Type;Cross-sectional
+List Values;Collection Type;Longitudinal
+List Values;Collection Type;Twin-study
+List Values;Collection Type;Quality control
+List Values;Collection Type;Population-based
+List Values;Collection Type;Disease specific
+List Values;Collection Type;Birth cohort
+List Values;Collection Type;Other
