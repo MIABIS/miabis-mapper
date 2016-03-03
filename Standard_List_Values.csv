@@ -1,0 +1,36 @@
+Entity;Attribute
+Sex;Male
+Sex;Female
+Sex;Unknown
+Sex;Undifferentiated
+Material Type;Blood
+Material Type;DNA
+Material Type;Faeces
+Material Type;Immortalized Cell Lines
+Material Type;Isolated Pathogen
+Material Type;Plasma
+Material Type;RNA
+Material Type;Saliva
+Material Type;Serum
+Material Type;Tissue (Frozen)
+Material Type;Tissue (FFPE)
+Material Type;Urine
+Material Type;Other
+Data Categories;Biological samples
+Data Categories;Survey data
+Data Categories;Imaging data
+Data Categories;Medical records
+Data Categories;National registries
+Data Categories;Genealogical records
+Data Categories;Physiological/Biochemical measurements
+Data Categories;Other
+Collection Type;Case-control
+Collection Type;Cohort
+Collection Type;Cross-sectional
+Collection Type;Longitudinal
+Collection Type;Twin-study
+Collection Type;Quality control
+Collection Type;Population-based
+Collection Type;Disease specific
+Collection Type;Birth cohort
+Collection Type;Other
