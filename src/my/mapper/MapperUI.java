@@ -13,15 +13,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -35,8 +34,6 @@ public class MapperUI extends javax.swing.JFrame {
      * Creates new form MapperUI
      */
     private String refAttr = "";
-    private String refEntity = "";
-    String tabName="";
     private static final String STANDARD_FILE_NAME = "Standard.csv";
     private static final String STANDARD_LIST_VALUES_FILE_NAME = "Standard_List_Values.csv";
     
@@ -52,85 +49,61 @@ public class MapperUI extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     public void readEntityFileInTable(JTable TheTable, JLabel TheLabel, JComboBox TheComboBox){
         
-    
-        
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
         int result = fileChooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             TheLabel.setText(selectedFile.getAbsolutePath());
-            System.out.println("File chosen");
-        }
-        else if(result == JFileChooser.CANCEL_OPTION){
-            System.out.println("File not chosen");
-        }
-        // parse file and fill table
-        String csvFile = TheLabel.getText();
-	BufferedReader br = null;
-	String line = "";
-	String separator = (String) TheComboBox.getSelectedItem();
-        if(("Tab".equals(separator))){
-            separator="\t";
-        }
+            
+            String csvFile = TheLabel.getText();
+            BufferedReader br = null;
+            String line = "";
+            String separator = (String) TheComboBox.getSelectedItem();
         
-        String[] term = null;
-        int row = 0;
+            if(("Tab".equals(separator))){
+                separator="\t";
+            }
         
-        DefaultTableModel myModel = (DefaultTableModel)TheTable.getModel();
-        //Reset the table
-        while(myModel.getRowCount()>0)
-          {
-             myModel.removeRow(0);
-          }
+            String[] term = null;
         
-        // read file
+            DefaultTableModel myModel = (DefaultTableModel)TheTable.getModel();
+
+            while(myModel.getRowCount()>0){
+                myModel.removeRow(0);
+            }
         
-        try {
-
-		Map<String, String> maps = new HashMap<String, String>();
-
-		br = new BufferedReader(new FileReader(csvFile));
-		//while ((line = br.readLine()) != null) {
-                        line = br.readLine();
-			// use comma as separator
-			term = line.split(separator);
-
-			//maps.put(term[0], term[1]);
-
-		//}
-
-		//loop map
-                int size = term.length;
+            try {
+                br = new BufferedReader(new FileReader(csvFile));
+                line = br.readLine();
+                term = line.split(separator);
                 int columnNumber = 1;
-		for (String str : term) {
-                    //fill jTable3 - mapper talbe
-                    //System.out.println(str);
-                    //row = myModel.getRowCount()+1;
+                
+                for (String str : term) {
                     Object[] RowData = {columnNumber,str};
-                    
+
                     myModel.addRow(RowData);
                     columnNumber++;
-		}
+                }
 
-	} 
-        catch (FileNotFoundException e) {
-		e.printStackTrace();
-	} 
-        catch (IOException e) {
-		e.printStackTrace();
-	} 
-        finally {
-		if (br != null) {
-			try {
-				br.close();
-			} 
-                        catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-        
+            } 
+            catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } 
+            catch (IOException e) {
+                e.printStackTrace();
+            } 
+            finally {
+                if (br != null) {
+                    try {
+                            br.close();
+                    } 
+                    catch (IOException e) {
+                            e.printStackTrace();
+                    }
+                }
+            }
+        }
     }
     
     
@@ -152,50 +125,24 @@ public class MapperUI extends javax.swing.JFrame {
             }
         
             String[] term = null;
-            int row = 0;
         
             DefaultTableModel myModel = (DefaultTableModel)TheTable.getModel();
-            //Reset the table
             myModel.setRowCount(0);
-            /*
-            while(myModel.getRowCount()>0)
-              {
-                 myModel.removeRow(0);
-              }
-            */
-            // read file
-        
-            try
-            {
+            try{
                 String line = "";
-                //Create the file reader
+                
                 br = new BufferedReader(new FileReader(csvFile));
-
-
-
-
-                br.readLine(); // Read and skip the first line.
-                //Read the file line by line
-
-                while ((line = br.readLine()) != null)
-                {
-
+                br.readLine();
+                while ((line = br.readLine()) != null){
                     term = line.split(separator);
                     Object[] RowData = {term[0],term[1]};
-
                     myModel.addRow(RowData);
-
-
                 }
-
-
-
             }
             catch (Exception e) {
                 e.printStackTrace();
             }
-            finally
-            {
+            finally{
                 try {
                     br.close();
                 } catch (IOException e) {
@@ -203,64 +150,33 @@ public class MapperUI extends javax.swing.JFrame {
                 }
             }
         }
-        else if(result == JFileChooser.CANCEL_OPTION){
-        }
-
-        
-        
-        
-        
-        
-        
-        
-        
     }
    
     
-    private void getStandardEntityAttribute(String entity, JTable standardTable ){
-        
+    private void getStandardEntityAttribute(JTable standardTable ){
         int selRow = standardTable.getSelectedRow();
         refAttr = (String) standardTable.getValueAt(selRow, 1);
-        refEntity = entity;
-        
     }
     
-    private void getStandardListValues(String entity, JTable standardTable) {
+    private void getStandardListValues(JTable standardTable) {
         int selRow = standardTable.getSelectedRow();
         refAttr = (String) standardTable.getValueAt(selRow, 1);
-        refEntity = entity;
     }
     
     private void setStandardEntityAttribute(JTable localTable) {                               
-        // TODO add your handling code here:
-        /*
-        if (refEntity != ""){
-            int selRow = localTable.getSelectedRow(); 
-            localTable.setValueAt(refEntity, selRow, 2);
-        }
-        */
         if (refAttr != ""){
           int selRow = localTable.getSelectedRow(); 
           localTable.setValueAt(refAttr, selRow, 2);
         }
-        refEntity="";
         refAttr="";
     }
     
     
     private void setStandardListValues(JTable localTable) {                               
-        // TODO add your handling code here:
-        /*
-        if (refEntity != ""){
-            int selRow = localTable.getSelectedRow(); 
-            localTable.setValueAt(refEntity, selRow, 2);
-        }
-        */
         if (refAttr != ""){
           int selRow = localTable.getSelectedRow(); 
           localTable.setValueAt(refAttr, selRow, 2);
         }
-        refEntity="";
         refAttr="";
     }
     
@@ -972,19 +888,15 @@ public class MapperUI extends javax.swing.JFrame {
         DefaultTableModel tableModelEntityMap = (DefaultTableModel)TableEntityMap.getModel();
         List<String> entityNameList = new ArrayList<String>();
         String[] term = null;
-        try
-        {
+        try{
             String line = "";
-            //Create the file reader
+            
             fileReader = new BufferedReader(new FileReader(pathToFile));
              
             String entity = "";
+            fileReader.readLine();
             
-            
-            fileReader.readLine(); // Read and skip the first line.
-            //Read the file line by line
-            while ((line = fileReader.readLine()) != null)
-            {
+            while ((line = fileReader.readLine()) != null){
                 
                 term = line.split(DELIMITER);
                 Object[] RowData = {term[0],term[1],term[2]};
@@ -1003,15 +915,11 @@ public class MapperUI extends javax.swing.JFrame {
                 tableModelEntityMap.addRow(RowDataMap);
 
             }
-            
-            
-           
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-        finally
-        {
+        finally{
             try {
                 fileReader.close();
             } catch (IOException e) {
@@ -1031,20 +939,15 @@ public class MapperUI extends javax.swing.JFrame {
         DefaultTableModel tableModelListValuesMap = (DefaultTableModel)TableListMap.getModel();
         List<String> listValuesNameList = new ArrayList<String>();
         String[] term = null;
-        try
-        {
+        try{
             String line = "";
-            //Create the file reader
+            
             fileReader = new BufferedReader(new FileReader(pathToFile));
              
             String entity = "";
+            fileReader.readLine();
             
-            
-            fileReader.readLine(); // Read and skip the first line.
-            //Read the file line by line
-            
-            while ((line = fileReader.readLine()) != null)
-            {
+            while ((line = fileReader.readLine()) != null){
                 
                 term = line.split(DELIMITER);
                 Object[] RowData = {term[0],term[1]};
@@ -1059,18 +962,12 @@ public class MapperUI extends javax.swing.JFrame {
                 }
                 
                 tableModelListValuesMap.addRow(RowData);
-                
-
             }
-            
-            
-           
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-        finally
-        {
+        finally{
             try {
                 fileReader.close();
             } catch (IOException e) {
@@ -1093,38 +990,23 @@ public class MapperUI extends javax.swing.JFrame {
         tableModelEntity.setRowCount(0);
         
         String[] term = null;
-        try
-        {
+        try{
             String line = "";
-            //Create the file reader
+            
             fileReader = new BufferedReader(new FileReader(pathToFile));
-             
-            
-            
-            
-            fileReader.readLine(); // Read and skip the first line.
-            //Read the file line by line
-            while ((line = fileReader.readLine()) != null)
-            {
-                
+            fileReader.readLine();
+            while ((line = fileReader.readLine()) != null){
                 term = line.split(DELIMITER);
                 Object[] RowData = {term[0],term[1],term[2]};
                 if (entity.equals(term[0])){
                     tableModelEntity.addRow(RowData);
                 }
-                
-                
-
             }
-            
-            
-           
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-        finally
-        {
+        finally{
             try {
                 fileReader.close();
             } catch (IOException e) {
@@ -1147,38 +1029,23 @@ public class MapperUI extends javax.swing.JFrame {
         tableModelListValues.setRowCount(0);
         
         String[] term = null;
-        try
-        {
+        try{
             String line = "";
-            //Create the file reader
+            
             fileReader = new BufferedReader(new FileReader(pathToFile));
-             
-            
-            
-            
-            fileReader.readLine(); // Read and skip the first line.
-            //Read the file line by line
-            while ((line = fileReader.readLine()) != null)
-            {
-                
+            fileReader.readLine();
+            while ((line = fileReader.readLine()) != null){
                 term = line.split(DELIMITER);
                 Object[] RowData = {term[0],term[1]};
                 if (listValue.equals(term[0])){
                     tableModelListValues.addRow(RowData);
                 }
-                
-                
-
             }
-            
-            
-           
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-        finally
-        {
+        finally{
             try {
                 fileReader.close();
             } catch (IOException e) {
@@ -1188,7 +1055,7 @@ public class MapperUI extends javax.swing.JFrame {
     }
     
     private void mapEntityAttributeResult(JTable  TableLocalAttr, JComboBox ComboEntity){
-        System.out.println("mapEntityAttributeResult method called");
+        
         DefaultTableModel tableModelLocalAttr = (DefaultTableModel)TableLocalAttr.getModel();
         DefaultTableModel tableModelEntityMap = (DefaultTableModel)TableEntityMap.getModel();
         String entity = ComboEntity.getSelectedItem().toString();
@@ -1208,16 +1075,15 @@ public class MapperUI extends javax.swing.JFrame {
                     }
                 }
             }
-               
-            
         }
+        
+        JOptionPane.showMessageDialog(null, ComboEntity.getSelectedItem().toString()+" Entity has been mapped!");
         
     }
     
     
     
     private void mapListValuesResult(JTable  TableLocalValue, JComboBox ComboList){
-        System.out.println("mapListValuesResult method called");
         DefaultTableModel tableModelLocalValue = (DefaultTableModel)TableLocalValue.getModel();
         DefaultTableModel tableModelListMap = (DefaultTableModel)TableListMap.getModel();
         String attribute = ComboList.getSelectedItem().toString();
@@ -1237,9 +1103,9 @@ public class MapperUI extends javax.swing.JFrame {
                     }
                 }
             }
-               
-            
         }
+        
+        JOptionPane.showMessageDialog(null, ComboList.getSelectedItem().toString()+" Attribute has been mapped!");
         
     }
     
@@ -1247,7 +1113,6 @@ public class MapperUI extends javax.swing.JFrame {
     
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         
-        //Select Entity tab 
         jTabbedPaneMain.setSelectedIndex(0);
         
         String pathToFile;
@@ -1259,27 +1124,21 @@ public class MapperUI extends javax.swing.JFrame {
         pathToFile = current+"\\"+STANDARD_LIST_VALUES_FILE_NAME;
         ComboList.setModel(new javax.swing.DefaultComboBoxModel(initList(pathToFile).toArray()));
         
-        
     }//GEN-LAST:event_formWindowOpened
 
     private void jButtonSaveEntityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveEntityActionPerformed
-        // TODO add your handling code here:
-        
         mapEntityAttributeResult(TableLocalAttr, ComboEntity);
     }//GEN-LAST:event_jButtonSaveEntityActionPerformed
 
     private void setStandardEntityAttribute(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_setStandardEntityAttribute
-        // TODO add your handling code here:
         setStandardEntityAttribute(TableLocalAttr);
     }//GEN-LAST:event_setStandardEntityAttribute
 
     private void getStandardEntityAttribute(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_getStandardEntityAttribute
-        // TODO add your handling code here:
-        getStandardEntityAttribute(ComboEntity.getSelectedItem().toString(), TableStandardAttr);
+        getStandardEntityAttribute(TableStandardAttr);
     }//GEN-LAST:event_getStandardEntityAttribute
 
     private void jButtonBrowseEntityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBrowseEntityActionPerformed
-        // TODO add your handling code here:
         readEntityFileInTable(TableLocalAttr, LabelEntityFile, ComboSeparatorEntity);
     }//GEN-LAST:event_jButtonBrowseEntityActionPerformed
 
@@ -1288,7 +1147,6 @@ public class MapperUI extends javax.swing.JFrame {
     }//GEN-LAST:event_ComboSeparatorEntityActionPerformed
 
     private void ComboEntityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboEntityActionPerformed
-        // TODO add your handling code here:
         populateEntityTableFromStandardFile(ComboEntity.getSelectedItem().toString());
     }//GEN-LAST:event_ComboEntityActionPerformed
 
@@ -1297,27 +1155,22 @@ public class MapperUI extends javax.swing.JFrame {
     }//GEN-LAST:event_ComboSeparatorListActionPerformed
 
     private void jButtonBrowseListValuesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBrowseListValuesActionPerformed
-        // TODO add your handling code here:
         readListValuesFileInTable(TableLocalValue, LabelListFile, ComboSeparatorList);
     }//GEN-LAST:event_jButtonBrowseListValuesActionPerformed
 
     private void ComboListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboListActionPerformed
-        // TODO add your handling code here:
         populateListValuesTableFromStandardFile(ComboList.getSelectedItem().toString());
     }//GEN-LAST:event_ComboListActionPerformed
 
     private void getStandardListValues(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_getStandardListValues
-        // TODO add your handling code here:
-        getStandardListValues(ComboList.getSelectedItem().toString(), TableStandardValue);
+        getStandardListValues(TableStandardValue);
     }//GEN-LAST:event_getStandardListValues
 
     private void setStandardListValues(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_setStandardListValues
-        // TODO add your handling code here:
         setStandardListValues(TableLocalValue);
     }//GEN-LAST:event_setStandardListValues
 
     private void jButtonSaveListValuesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveListValuesActionPerformed
-        // TODO add your handling code here:
         mapListValuesResult(TableLocalValue, ComboList);
     }//GEN-LAST:event_jButtonSaveListValuesActionPerformed
 
@@ -1330,18 +1183,15 @@ public class MapperUI extends javax.swing.JFrame {
     }//GEN-LAST:event_TableListMapsetSCMIABIS
 
     private void jButtonSaveMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveMapActionPerformed
-        // TODO add your handling code here:
         saveMapToFile();
     }//GEN-LAST:event_jButtonSaveMapActionPerformed
 
     private void ComboEntityItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ComboEntityItemStateChanged
-        // TODO add your handling code here:
         DefaultTableModel tableModelLocalAttr = (DefaultTableModel)TableLocalAttr.getModel();
         tableModelLocalAttr.setRowCount(0);
     }//GEN-LAST:event_ComboEntityItemStateChanged
 
     private void ComboListItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ComboListItemStateChanged
-        // TODO add your handling code here:
         //DefaultTableModel tableModelLocalValue = (DefaultTableModel)TableLocalValue.getModel();
         //tableModelLocalValue.setRowCount(0);
     }//GEN-LAST:event_ComboListItemStateChanged
@@ -1355,18 +1205,20 @@ public class MapperUI extends javax.swing.JFrame {
         FileWriter fw = null;
         try {
             mappingFile.createNewFile();
+            LabelMapFile.setText(mappingFile.getAbsolutePath());
             fw = new FileWriter(mappingFile);
             writeEntityMapToFile(TableEntityMap, fw);
             writeListValuesMapToFile(TableListMap, fw);
+            JOptionPane.showMessageDialog(null, "The map file has been saved to the location "+mappingFile.getAbsolutePath());
         } catch (IOException ex) {
             Logger.getLogger(MapperUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         finally {
             if(fw != null)
                 try {
-                        fw.close();
+                    fw.close();
                 } catch (IOException ex) {
-                        Logger.getLogger(MapperUI.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(MapperUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
         } 
     }
@@ -1559,6 +1411,4 @@ public class MapperUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPaneMain;
     // End of variables declaration//GEN-END:variables
-
-   
 }
