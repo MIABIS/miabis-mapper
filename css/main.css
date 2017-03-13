@@ -1,0 +1,36 @@
+/* CSS Document */
+
+.entitylabel, .entity, .separatorlabel, .list {
+  display: inline-block;
+}
+
+#standardtable tbody tr, #localtable tbody tr, #standardlisttable tbody tr, #locallisttable tbody tr, #entitymapresulttable tbody tr, #listvaluesmapresulttable tbody tr{
+	cursor: pointer;
+}
+
+#entities .panel-default, #listvalues .panel-default, #mapresult .panel-default{
+	margin-bottom:0px;
+}
+
+.savebutton{
+    margin: 20px 0;
+    padding: 2px;
+    float: right;
+}
+
+.clearbutton{
+    float: left;
+}
+
+#modalNoFileSelected .modal-header, #modalFileMapped .modal-header, #modalFileNotMapped .modal-header, #modalNoListFileSelected .modal-header, #modalListFileMapped .modal-header, #modalListFileNotMapped .modal-header, #modalClearEntityMapSuccess .modal-header, #modalClearListValuesMapSuccess .modal-header, #modalSaveMapResultSuccess .modal-header{
+	padding: 0;
+	border-bottom: none;
+}
+
+#modalNoFileSelected .alert, #modalFileMapped .alert, #modalFileNotMapped .alert, #modalNoListFileSelected .alert, #modalListFileMapped .alert, #modalListFileNotMapped .alert, #modalClearEntityMapSuccess .alert, #modalClearListValuesMapSuccess .alert, #modalSaveMapResultSuccess .alert{
+	margin-bottom: 0;
+}
+
+#modalNoFileSelected .modal-header .close, #modalFileMapped .modal-header .close, #modalFileNotMapped .modal-header .close, #modalNoListFileSelected .modal-header .close, #modalListFileMapped .modal-header .close, #modalListFileNotMapped .modal-header .close, #modalClearEntityMapSuccess .modal-header .close, #modalClearListValuesMapSuccess .modal-header .close, #modalSaveMapResultSuccess .modal-header .close{
+	margin: 5px 10px;
+}

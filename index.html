@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        <title>Mapper Version 1.0</title>
+    
+        
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    
+        <link rel="stylesheet" href="css/main.css">
+        
+        
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.min.css">
+        
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.min.js"></script>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.js"></script>
+        
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+        
+        <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+        
+		<script src="http://www.developerdan.com/table-to-json/javascripts/jquery.tabletojson.min.js"></script>
+
+	</head>
+	<body>
+
+        <div class="container-fluid">
+        
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="page-header">
+                        <h1>
+                            Mappit! <small>Application interoperability tool </small>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#entities" data-toggle="tab">Entities</a>
+                        </li>
+                        <li>
+                            <a href="#listvalues" data-toggle="tab">List Values</a>
+                        </li>
+                        <li>
+                            <a href="#mapresult" data-toggle="tab">Map Result</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        
+            <div class="tab-content">
+                
+                <div class="tab-pane active" id="entities">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="col-md-6">
+                                <div class="entitylabel">
+                                    <span>Select the entity to be mapped:</span>
+                                </div>
+                                <div class="dropdown entity">
+                                    <select class="selectpicker" id="entitypicker">
+	                                    <!--select options populated dynamically from the standard file -->
+                                        <!--<option>Sample</option>
+                                        <option>Sample Collection</option>
+                                        <option>Study</option>
+                                        <option>Contact Information</option>-->
+                                    </select>
+                                 </div>
+                            </div>   
+                            <div class="col-md-6">
+                                <div class="separatorlabel">
+                                    <span>Select the file to map:</span>
+                                </div>
+                                <div class="entity">
+                                    <input type="file" class="btn btn-default" name="files" id="files">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="panel panel-default">
+                        <div class="panel-body">  
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h2>Standard Attributes</h2>
+                                    <table class="table table-bordered table-striped" id="standardtable">
+                                       <!-- Table contents generated dynamically -->
+                                    </table>
+                                </div>
+                                
+                                
+                                <div class="col-md-6">
+                                    <h2>Local Attributes</h2>
+                                    <table class="table table-bordered table-striped" id="localtable">
+                                        <!-- Table contents generated dynamically -->
+                                        <thead>
+                                            <tr>
+                                                <th>Column No.</th>
+                                                <th>Attribute</th>
+                                                <th>Standard Attribute</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="savebutton">
+                    	<input class="btn btn-success" type="button" value="Save Entity Map" id="entitysavebutton" name="entitysavebutton">
+                    </div> 
+                    
+                    <!-- Modal displayed when no file is selected and the save entity map button is clicked-->
+                    <div class="modal fade" id="modalNoFileSelected" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    	<span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <div class="alert alert-info">
+                                        Please choose your file to map!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    <!-- Modal displayed when mapping is done and the save entity map button is clicked-->
+                    <div class="modal fade" id="modalFileMapped" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    	<span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <div class="alert alert-success">
+                                        Your mapping has been saved in the Map Result tab!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    <!-- Modal displayed when no mapping is done and the save entity map button is clicked-->
+                    <div class="modal fade" id="modalFileNotMapped" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    	<span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <div class="alert alert-info">
+                                        You have not selected to map any attributes!
+                                    </div>
+                            	</div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    
+                </div><!--entities-->
+            
+            
+                <div class="tab-pane" id="listvalues">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="col-md-6">
+                                <div class="entitylabel">
+                                    <span>Select the list to be mapped:</span>
+                                </div>
+                                <div class="dropdown entity">
+                                    <select class="selectpicker" id="listpicker">
+                                    	<!--select options populated dynamically from the standard file -->
+                                        <!--<option>Sex</option>
+                                        <option>Material Type</option>
+                                        <option>Data Categories</option>
+                                        <option>Collection Type</option>-->
+                                    </select>
+                                 </div>
+                            </div>   
+                            <div class="col-md-6">
+                                <div class="separatorlabel">
+                                    <span>Select the file to map:</span>
+                                </div>
+                                <div class="list">
+                                    <input type="file" class="btn btn-default" name="listfiles" id="listfiles">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="panel panel-default">
+                        <div class="panel-body">  
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h2>Standard List Values</h2>
+                                    <table class="table table-bordered table-striped" id="standardlisttable">
+                                       <!-- Table contents generated dynamically -->
+                                    </table>
+                                </div>
+                                
+                                
+                                <div class="col-md-6">
+                                    <h2>Local List Values</h2>
+                                    <table class="table table-bordered table-striped" id="locallisttable">
+                                        <!-- Table contents generated dynamically -->
+                                        <thead>
+                                            <tr>
+                                                <th>List</th>
+                                                <th>Local Value</th>
+                                                <th>Standard Value</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="savebutton">
+                    	<input class="btn btn-success" type="button" value="Save List Map" id="listsavebutton" name="listsavebutton">
+                    </div>
+                    
+                    
+                    <!-- Modal displayed when no file is selected and the save list map button is clicked-->
+                    <div class="modal fade" id="modalNoListFileSelected" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    	<span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <div class="alert alert-info">
+                                        Please choose your file to map!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    <!-- Modal displayed when mapping is done and the save list map button is clicked-->
+                    <div class="modal fade" id="modalListFileMapped" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    	<span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <div class="alert alert-success">
+                                        Your mapping has been saved in the Map Result tab!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    <!-- Modal displayed when no mapping is done and the save list map button is clicked-->
+                    <div class="modal fade" id="modalListFileNotMapped" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    	<span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <div class="alert alert-info">
+                                        You have not selected to map any List Values!
+                                    </div>
+                            	</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                
+                </div><!--listvalues-->
+                
+                <div class="tab-pane" id="mapresult">
+                	<div class="panel panel-default">
+                        <div class="panel-body">  
+                            <div class="row">
+                                
+                                <div class="col-md-6">
+                                    <h2>Entity Map</h2>
+                                    <div class="clearbutton">
+                                    	<input class="btn btn-danger" type="button" value="Clear Entity Map" id="entityclearbutton" name="entityclearbutton">
+                                    </div>
+                                    
+                                    <!-- Modal displayed when trying to clear the entity map result table-->
+                                    <div class="modal fade" tabindex="-1" role="dialog" id="modalClearEntityMap">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    	<span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                	<p>Are you sure you want to delete all the entity mapping you have done? This will clear the mapping you have done for the Entity Map table!</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal" id="noEntityMapClear">No</button>
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="yesEntityMapClear">Yes</button>
+                                                </div>
+                                            </div><!-- /.modal-content -->
+                                        </div><!-- /.modal-dialog -->
+                                    </div><!-- /.modal -->
+                                    
+                                    
+                                    <!-- Modal displayed on confirming the clear of the entity map result table-->
+                                    <div class="modal fade" id="modalClearEntityMapSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    <div class="alert alert-success">
+                                                        The Entity Map table has been cleared!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <table class="table table-bordered table-striped" id="entitymapresulttable">
+                                       <!-- Table contents generated dynamically -->
+                                    </table>
+                                </div>
+                                
+                                
+                                <div class="col-md-6">
+                                    <h2>List Values Map</h2>
+                                    <div class="clearbutton">
+                                    	<input class="btn btn-danger" type="button" value="Clear List Values Map" id="listvaluesclearbutton" name="listvaluesclearbutton">
+                                    </div>
+                                    
+                                    <!-- Modal displayed when trying to clear the list values map result table-->
+                                    <div class="modal fade" tabindex="-1" role="dialog" id="modalClearListValuesMap">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    	<span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                	<p>Are you sure you want to delete all the list values mapping you have done? This will clear the mapping you have done for the List Values Map table!</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal" id="noListValuesMapClear">No</button>
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="yesListValuesMapClear">Yes</button>
+                                                </div>
+                                            </div><!-- /.modal-content -->
+                                        </div><!-- /.modal-dialog -->
+                                    </div><!-- /.modal -->
+                                    
+                                    
+                                    <!-- Modal displayed on confirming the clear of the list values map result table-->
+                                    <div class="modal fade" id="modalClearListValuesMapSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    <div class="alert alert-success">
+                                                        The List Values Map table has been cleared!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table class="table table-bordered table-striped" id="listvaluesmapresulttable">
+                                        <!-- Table contents generated dynamically -->
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="savebutton">
+                    	<input class="btn btn-success" type="button" value="Save Map Result" id="mapresultsavebutton" name="mapresultsavebutton">
+                    </div>
+                    
+                    <!-- Modal displayed when trying to save the map result-->
+                    <div class="modal fade" tabindex="-1" role="dialog" id="modalSaveMapResult">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <p>You are going to save all the mapping you have done and download the result! Check in the Entity Map table and the List Values Map table to see what you have mapped so far. If you are NOT done with the mapping yet, click No and continue the mapping. If you click Yes, the result will be downloaded as a zipped folder in your local computer and the mapping you have done in this session will be cleared, which means if you want to do the mapping again you have to do it from the beginning. Make sure that you have finished mapping everything you want before clicking Yes. If you see that you have not done all the mapping you wanted in the downloaded results, you can simply redo the mapping process all over again from the beginning!</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" id="noSaveMapResult">No</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="yesSaveMapResult">Yes</button>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+                    
+                    
+                    <!-- Modal displayed on confirming the save of the map result-->
+                    <div class="modal fade" id="modalSaveMapResultSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <div class="alert alert-success">
+                                        The resulting mapping json has been downloaded as a zipped folder in your local computer!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--mapresult-->
+            
+            </div><!--tab-content-->
+            
+            
+           
+        
+        </div><!--container-fluid ends-->
+
+
+
+		<script src="js/main.js"></script>
+	</body>
+</html>
