@@ -1,9 +1,16 @@
 // JavaScript Document
 
+//Download standard files in zipped format.
+$('#downloadstandardbutton').on('click', function () {
+	window.location = "http://"+document.location.hostname+"/mapper/standard/standardfiles.zip"
+})
+
+
+
 //Ajax parsing of the standard entity file and on success write response to the entity table and the map result table.
 $.ajax({
 	type: "GET",
-	url: "http://"+document.location.hostname+"/mapper/Standard.csv",
+	url: "http://"+document.location.hostname+"/mapper/standard/Standard.csv",
 	success: function (data) {
 		populateSelectOptionsEntityFromStandardFile(Papa.parse(data).data);
 		parseStandardFileToEntityTable(Papa.parse(data).data);
@@ -146,16 +153,25 @@ $('#files').on('change',function(){
 $(document).ready(function(){
 	$('#standardtable').DataTable({
 					//searching: false,
+					"scrollY": "500px",
 					paging: false,
 					info: false
 				});
 	
 	$('#localtable').DataTable({
 					//searching: false,
+					//"scrollY": "500px",
+					/*"columns": [
+						{title: "Column No."},
+						{title: "Attribute" },
+						{title: "Standard Attribute" }
+    				],*/
 					paging: false,
 					info: false
 				});
 	
+	//"scrollY": "500px" messes up the column header alignment with table body, so instead of using the DataTable scroll we use the plain html scroll.
+	$('#localtable').wrap("<div class='scrolledTable'></div>");
 	
 	var cellData;
 	
@@ -254,7 +270,7 @@ function copyEntityMaptoMapResult(standardEntity, standardAttribute, localAttrib
 //Ajax parsing of the standard list file and on success write response to the list table and the map result table.
 $.ajax({
 	type: "GET",
-	url: "http://"+document.location.hostname+"/mapper/Standard_List_Values.csv",
+	url: "http://"+document.location.hostname+"/mapper/standard/Standard_List_Values.csv",
 	success: function (data) {
 		populateSelectOptionsListFromStandardFile(Papa.parse(data).data);
 		parseStandardFileToListTable(Papa.parse(data).data);

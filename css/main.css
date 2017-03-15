@@ -22,6 +22,17 @@
     float: left;
 }
 
+li#downloadstandard{
+    float: right;
+}
+
+.scrolledTable{ 
+	overflow-y: auto; 
+	height: 543px;
+	clear:both; 
+}
+
+
 #modalNoFileSelected .modal-header, #modalFileMapped .modal-header, #modalFileNotMapped .modal-header, #modalNoListFileSelected .modal-header, #modalListFileMapped .modal-header, #modalListFileNotMapped .modal-header, #modalClearEntityMapSuccess .modal-header, #modalClearListValuesMapSuccess .modal-header, #modalSaveMapResultSuccess .modal-header{
 	padding: 0;
 	border-bottom: none;
