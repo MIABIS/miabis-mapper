@@ -1,5 +1,32 @@
 /* CSS Document */
 
+.page-header a:hover{
+	text-decoration: none;
+}
+
+.page-header{
+	border-bottom: none;
+}
+
+#logo{
+	position: relative;
+}
+
+#logo img {
+    float: right;
+    top: 0px;
+    right: 0px;
+}
+
+.nav-tabs{
+	border-bottom:none;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+	font-weight: bold;
+	color: #337ab7;
+}
+
 .entitylabel, .entity, .separatorlabel, .list {
   display: inline-block;
 }

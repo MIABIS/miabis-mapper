@@ -152,14 +152,15 @@ $('#files').on('change',function(){
 /*Interactive mapping of attributes from the standard table to the local table. Clicking a row in the standard table followed by clicking a row in the local table, maps the local attribute in the clicked row of the local table against standard attribute from the clicked row in the standard table.*/
 $(document).ready(function(){
 	$('#standardtable').DataTable({
-					//searching: false,
-					"scrollY": "500px",
+					searching: false,
+					//"scrollY": "500px",
 					paging: false,
-					info: false
+					info: false,
+					"ordering": false
 				});
 	
 	$('#localtable').DataTable({
-					//searching: false,
+					searching: false,
 					//"scrollY": "500px",
 					/*"columns": [
 						{title: "Column No."},
@@ -167,10 +168,12 @@ $(document).ready(function(){
 						{title: "Standard Attribute" }
     				],*/
 					paging: false,
-					info: false
+					info: false,
+					"ordering": false
 				});
 	
 	//"scrollY": "500px" messes up the column header alignment with table body, so instead of using the DataTable scroll we use the plain html scroll.
+	$('#standardtable').wrap("<div class='scrolledTable'></div>");
 	$('#localtable').wrap("<div class='scrolledTable'></div>");
 	
 	var cellData;
@@ -415,17 +418,22 @@ $('#listfiles').on('change',function(){
 /*Interactive mapping of values from the standard list table to the local list table. Clicking a row in the standard list table followed by clicking a row in the local list table, maps the local value in the clicked row of the local list table against standard value from the clicked row in the standard list table.*/
 $(document).ready(function(){
 	$('#standardlisttable').DataTable({
-					//searching: false,
+					searching: false,
 					paging: false,
-					info: false
+					info: false,
+					"ordering": false
 				});
 	
 	$('#locallisttable').DataTable({
-					//searching: false,
+					searching: false,
 					paging: false,
-					info: false
+					info: false,
+					"ordering": false
 				});
 	
+	
+	$('#standardlisttable').wrap("<div class='scrolledTable'></div>");
+	$('#locallisttable').wrap("<div class='scrolledTable'></div>");
 	
 	var cellData;
 	
