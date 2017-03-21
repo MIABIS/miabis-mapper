@@ -22,6 +22,10 @@
 	border-bottom:none;
 }
 
+.mapper-tabs li{
+	margin-bottom: -3px;
+}
+
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
 	font-weight: bold;
 	color: #337ab7;
