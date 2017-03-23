@@ -231,6 +231,17 @@ $('#entitysavebutton').on('click', function () {
 	});
 	
 	if (datapresent === true){
+		var table = $('#localtable').tableToJSON();
+		$.ajax({  
+			type: 'POST',  
+			url: 'mapresultsave.php', 
+			data: {entity: $('#entitypicker').val(), data: table, mode: "localfile"},
+			success: function(response) {
+			},
+			error: function(error) {
+			}
+		});
+		
 		$('#modalFileMapped').find('div.alert').text('Your mapping for the entity '+$('#entitypicker').val()+ ' has been saved in the Map Result tab! You can continue mapping for the same entity or choose a new entity to map!');
 		$('#modalFileMapped').modal('show');
 	}
@@ -239,17 +250,6 @@ $('#entitysavebutton').on('click', function () {
 		$('#modalFileNotMapped').modal('show');
 	}
 	
-	
-	var table = $('#localtable').tableToJSON();
-	$.ajax({  
-		type: 'POST',  
-		url: 'mapresultsave.php', 
-		data: {entity: $('#entitypicker').val(), data: table, mode: "localfile"},
-		success: function(response) {
-		},
-		error: function(error) {
-        }
-	});
 });
 
 
