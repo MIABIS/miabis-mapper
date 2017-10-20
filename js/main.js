@@ -1,5 +1,8 @@
 // JavaScript Document
 
+var standardData = [];
+
+
 //Download standard files in zipped format.
 $('#downloadstandardbutton').on('click', function () {
 	window.location = "http://"+document.location.hostname+"/mapper/standard/standardfiles.zip"
@@ -38,8 +41,10 @@ function populateSelectOptionsEntityFromStandardFile(tableData) {
 function parseStandardFileToEntityTable(tableData) {
 	var tablehead = $('<thead></thead>');
 	var headerrow = $('<tr></tr>');
+	standardData.length = 0;
 	
-	$.each( tableData[0], function( index, value ){
+	
+	$.each(tableData[0], function( index, value ){
 		headerrow.append($("<th>" + value + "</th>"));
 	});
 	tablehead.append(headerrow);
@@ -52,27 +57,61 @@ function parseStandardFileToEntityTable(tableData) {
 	$(tableData).each(function (i, rowData) {
 		if($('#entitypicker').val() === rowData[0]){
 			var row = $('<tr></tr>');
+			var data = [];
 			$(rowData).each(function (j, cellData) {
 				row.append($('<td>'+cellData+'</td>'));
+				data.push(cellData);
 			});
+			
 			$("#standardtable").append(row);
+			standardData.push(data);
 		}
 	});
 	
+	var standardtable = $('#standardtable').DataTable({
+							//searching: false,
+							//"scrollY": "500px",
+							//paging: false,
+							//info: false,
+							"data": standardData,
+							"ordering": false
+						});
+	
+	
+	
 	$('#entitypicker').on('changed.bs.select', function (e) {
+		standardData.length = 0;
 		$('#standardtable tbody').empty();
+		$('#localtable').DataTable().destroy();
 		$('#localtable tbody').empty();
+		$('#files').val("");
+		
 		
 		$(tableData).each(function (i, rowData) {		
 			if($('#entitypicker').val() === rowData[0]){
 				var row = $('<tr></tr>');
+				var data = [];
 				$(rowData).each(function (j, cellData) {
 					row.append($('<td>'+cellData+'</td>'));
+					data.push(cellData);
 				});
+				
 				$("#standardtable").append(row);
+				standardData.push(data);
 			}
 		});
+		
+		standardtable.destroy();
+		standardtable = $('#standardtable').DataTable({
+							//searching: false,
+							//"scrollY": "500px",
+							//paging: false,
+							//info: false,
+							"data": standardData,
+							"ordering": false
+						});
 	});
+	
 	
 }
 
@@ -112,6 +151,9 @@ function parseStandardFileToEntityMapResultTable(tableData) {
 
 //Parse the local entity file and write to the local entity table.
 $('#files').on('change',function(){
+	var localdata = [];
+	
+	
 	$('#localtable').empty();
 	var tablehead = $('<thead></thead>');
 	var headerrow = $('<tr></tr>');
@@ -133,12 +175,34 @@ $('#files').on('change',function(){
 			header: true,
 			complete: function(results) {
 						var data = results.meta.fields;
+						
 						$.each( data, function(index, value){
 							var row = $('<tr></tr>');
+							var d = [];
 							row.append($("<td>" + (index+1) + "</td>"));
 							row.append($("<td>" + value + "</td>"));
 							row.append($("<td></td>"));
 							$("#localtable").append(row);
+							d.push(index+1);
+							d.push(value);
+							d.push("");
+							localdata.push(d);
+						});
+						
+						
+						$('#localtable').DataTable({
+							//searching: false,
+							//"scrollY": "500px",
+							/*"columns": [
+								{title: "Column No."},
+								{title: "Attribute" },
+								{title: "Standard Attribute" }
+							],*/
+							//paging: false,
+							//info: false,
+							"destroy": true,
+							"data": localdata,
+							"ordering": false
 						});
 						
 					  }
@@ -151,30 +215,24 @@ $('#files').on('change',function(){
 
 /*Interactive mapping of attributes from the standard table to the local table. Clicking a row in the standard table followed by clicking a row in the local table, maps the local attribute in the clicked row of the local table against standard attribute from the clicked row in the standard table.*/
 $(document).ready(function(){
-	$('#standardtable').DataTable({
-					searching: false,
-					//"scrollY": "500px",
-					paging: false,
-					info: false,
-					"ordering": false
-				});
 	
-	$('#localtable').DataTable({
-					searching: false,
+	
+	/*$('#localtable').DataTable({
+					searching: false,*/
 					//"scrollY": "500px",
 					/*"columns": [
 						{title: "Column No."},
 						{title: "Attribute" },
 						{title: "Standard Attribute" }
     				],*/
-					paging: false,
+					/*paging: false,
 					info: false,
 					"ordering": false
-				});
+				});*/
 	
 	//"scrollY": "500px" messes up the column header alignment with table body, so instead of using the DataTable scroll we use the plain html scroll.
-	$('#standardtable').wrap("<div class='scrolledTable'></div>");
-	$('#localtable').wrap("<div class='scrolledTable'></div>");
+	//$('#standardtable').wrap("<div class='scrolledTable'></div>");
+	//$('#localtable').wrap("<div class='scrolledTable'></div>");
 	
 	var cellData;
 	
@@ -221,6 +279,9 @@ $('#entitysavebutton').on('click', function () {
 		$('#modalNoFileSelected').modal('show');
 		return;
 	}
+	
+	//Need to clear the filters in the table before saving so that all the mapped rows get saved; otherwise only the mapped rows fetched by the filter get saved.
+	$('#localtable').DataTable().search( '' ).columns().search( '' ).draw();
 	
 	var datapresent = false;
 	$('#localtable > tbody > tr').each(function(index, element) {
