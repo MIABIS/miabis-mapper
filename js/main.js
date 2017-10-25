@@ -1,7 +1,7 @@
 // JavaScript Document
 
 var standardData = [];
-
+var standardList = [];
 
 //Download standard files in zipped format.
 $('#downloadstandardbutton').on('click', function () {
@@ -146,6 +146,10 @@ function parseStandardFileToEntityMapResultTable(tableData) {
 		}
 	});
 	
+	$('#entitymapresulttable').DataTable({
+		"order": []
+	});
+	
 }
 
 
@@ -169,6 +173,7 @@ $('#files').on('change',function(){
 	$("#localtable").append(tablebody);
 						
 	var file = $('#files')[0].files[0];
+	
 	if(typeof file !== "undefined"){
 	//if(file.name != null){
 		Papa.parse(file, {
@@ -207,6 +212,10 @@ $('#files').on('change',function(){
 						
 					  }
 		});
+	}
+	else{
+		$('#localtable').DataTable().destroy();
+		$('#localtable tbody').empty();
 	}
 	
 });
@@ -253,7 +262,7 @@ $(document).ready(function(){
 	});
 	
 	$('#localtable').on('click', 'tbody tr', function(){
-		if ( $(this).hasClass('selected') ) {
+		if ($(this).hasClass('selected')) {
 			$(this).removeClass('selected');
 			$(this).find('td').eq(2).empty();
 		}
@@ -364,8 +373,9 @@ function populateSelectOptionsListFromStandardFile(tableData) {
 function parseStandardFileToListTable(tableData) {
 	var tablehead = $('<thead></thead>');
 	var headerrow = $('<tr></tr>');
+	standardList.length = 0;
 	
-	$.each( tableData[0], function( index, value ){
+	$.each(tableData[0], function( index, value ){
 		headerrow.append($("<th>" + value + "</th>"));
 	});
 	tablehead.append(headerrow);
@@ -378,25 +388,51 @@ function parseStandardFileToListTable(tableData) {
 	$(tableData).each(function (i, rowData) {
 		if($('#listpicker').val() === rowData[0]){
 			var row = $('<tr></tr>');
+			var data = [];
 			$(rowData).each(function (j, cellData) {
 				row.append($('<td>'+cellData+'</td>'));
+				data.push(cellData);
 			});
 			$("#standardlisttable").append(row);
+			standardList.push(data);
 		}
 	});
 	
+	
+	var standardlisttable = $('#standardlisttable').DataTable({
+								/* style="width: 0px;" automatically being applied to the table,
+								 * so we need to override it with "autoWidth": false
+								 *  */
+								"autoWidth": false,
+								"data": standardList,
+								"ordering": false
+							});
+	
 	$('#listpicker').on('changed.bs.select', function (e) {
+		standardList.length = 0;
 		$('#standardlisttable tbody').empty();
+		//$('#locallisttable').DataTable().destroy();
+		//$('#locallisttable tbody').empty();
+		$('#listfiles').val("");
 		
 		$(tableData).each(function (i, rowData) {		
 			if($('#listpicker').val() === rowData[0]){
 				var row = $('<tr></tr>');
+				var data = [];
 				$(rowData).each(function (j, cellData) {
 					row.append($('<td>'+cellData+'</td>'));
+					data.push(cellData);
 				});
 				$("#standardlisttable").append(row);
+				standardList.push(data);
 			}
 		});
+		
+		standardlisttable.destroy();
+		standardlisttable = $('#standardlisttable').DataTable({
+								"data": standardList,
+								"ordering": false
+							});
 	});
 	
 }
@@ -430,11 +466,17 @@ function parseStandardFileToListMapResultTable(tableData) {
 		}
 	});
 	
+	$('#listvaluesmapresulttable').DataTable({
+		"order": []
+	});
+	
 }
 
 
 //Parse the local list file and write to the local list table.
 $('#listfiles').on('change',function(){
+	var locallist = [];
+	
 	$('#locallisttable').empty();
 	var tablehead = $('<thead></thead>');
 	var headerrow = $('<tr></tr>');
@@ -458,19 +500,34 @@ $('#listfiles').on('change',function(){
 						$(data).each(function (i, rowData) {
 							if(i > 0){
 								var row = $('<tr></tr>');
+								var d = [];
 								$(rowData).each(function (j, cellData) {
 									row.append($('<td>'+cellData+'</td>'));
+									d.push(cellData);
 									if(j == 1){
 										row.append($('<td></td>'));
 									}
 								});
+								d.push("");
 								$("#locallisttable").append(row);
+								locallist.push(d);
 							}
+						});
+						
+						$('#locallisttable').DataTable({
+							"destroy": true,
+							"data": locallist,
+							"ordering": false
 						});
 						
 					  }
 		});
 	}
+	else{
+		$('#locallisttable').DataTable().destroy();
+		$('#locallisttable tbody').empty();
+	}
+	
 	
 });
 
@@ -478,23 +535,23 @@ $('#listfiles').on('change',function(){
 
 /*Interactive mapping of values from the standard list table to the local list table. Clicking a row in the standard list table followed by clicking a row in the local list table, maps the local value in the clicked row of the local list table against standard value from the clicked row in the standard list table.*/
 $(document).ready(function(){
-	$('#standardlisttable').DataTable({
+	/*$('#standardlisttable').DataTable({
 					searching: false,
 					paging: false,
 					info: false,
 					"ordering": false
-				});
+				});*/
 	
-	$('#locallisttable').DataTable({
+	/*$('#locallisttable').DataTable({
 					searching: false,
 					paging: false,
 					info: false,
 					"ordering": false
-				});
+				});*/
 	
 	
-	$('#standardlisttable').wrap("<div class='scrolledTable'></div>");
-	$('#locallisttable').wrap("<div class='scrolledTable'></div>");
+	//$('#standardlisttable').wrap("<div class='scrolledTable'></div>");
+	//$('#locallisttable').wrap("<div class='scrolledTable'></div>");
 	
 	var cellData;
 	
@@ -572,17 +629,17 @@ function copyListValuesMaptoListValuesMapResult(list, standardValue, localValue)
 
 //Individual deleting of the map result in the entity map result table and the list map result table.
 $(document).ready(function(){
-	$('#entitymapresulttable').DataTable({
+	/*$('#entitymapresulttable').DataTable({
 					paging: false,
 					info: false,
 					"order": []
-				});
+				});*/
 	
-	$('#listvaluesmapresulttable').DataTable({
+	/*$('#listvaluesmapresulttable').DataTable({
 					paging: false,
 					info: false,
 					"order": []
-				});
+				});*/
 				
 	$('#entitymapresulttable').on('click', 'tbody tr', function(){
 		if($(this).hasClass('selected')) {
